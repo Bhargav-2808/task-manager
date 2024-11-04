@@ -29,18 +29,19 @@ const envVarsSchema = z.object({
 const envInput = envVarsSchema.safeParse(process.env);
 const envVars = envInput.data;
 
+
 if (envInput.error) {
   throw new Error('Add all env variables in .env file');
 }
 
 export const config = {
   app: {
-    port: envVars.PORT,
-    env: envVars.ENVIROMENT || 'development',
-    dbURL: envVars.DATABASE_URL,
-    hostURL: envVars.HOST_URL,
+    port: envVars?.PORT || 8080,
+    env: envVars?.ENVIROMENT || 'development',
+    dbURL: envVars?.DATABASE_URL || '',
+    hostURL: envVars?.HOST_URL || '',
   },
   jwt: {
-    secret: envVars.JWT_SECRET,
+    secret: envVars?.JWT_SECRET || '',
   }
 };

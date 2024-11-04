@@ -2,7 +2,9 @@ import mongoose, { Document, Schema, Model } from 'mongoose';
 
 // Define the document interface
 export type UserDocument = Document & {
-  name: string;
+  first_name: string;
+  last_name: string;
+  profile_photo: string;
   email: string;
   is_active: boolean;
   created_at: Date;
@@ -14,9 +16,16 @@ export type UserDocument = Document & {
 export type UserModel = Model<UserDocument>;
 
 const UserSchema = new Schema<UserDocument>({
-  name: {
+  first_name: {
     type: String,
     required: true,
+  },
+  last_name: {
+    type: String,
+    required: true,
+  },
+  profile_photo: {
+    type: String,
   },
   email: {
     type: String,

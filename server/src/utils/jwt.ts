@@ -15,7 +15,7 @@ export function jwtVerify(token: string) {
   }
 }
 
-export function jwtSign(obj) {
+export function jwtSign(obj: object) {
   const secretKey = config.jwt.secret;
   if (!secretKey) {
     throw new Error('JWT secret key is undefined');
