@@ -1,0 +1,14 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "build": "tsc --project ./",
+    "start": "ts-node --max-old-space-size=3072 ./src/app.ts",
+    "dev": "nodemon",
+    "lint": "eslint src/**/*.ts --fix"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
