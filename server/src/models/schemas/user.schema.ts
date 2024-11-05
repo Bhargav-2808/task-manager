@@ -42,7 +42,7 @@ const UserSchema = new Schema<UserDocument>({
   tasks: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'Task',
     },
   ],
   created_at: {
