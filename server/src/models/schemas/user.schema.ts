@@ -1,4 +1,5 @@
 import mongoose, { Document, Schema, Model } from 'mongoose';
+import { TaskDocument } from './task.schema';
 
 // Define the document interface
 export type UserDocument = Document & {
@@ -10,7 +11,7 @@ export type UserDocument = Document & {
   created_at: Date;
   updated_at: Date;
   password: string;
-  address: string;
+  tasks?: TaskDocument[];
 };
 
 export type UserModel = Model<UserDocument>;
@@ -38,6 +39,12 @@ const UserSchema = new Schema<UserDocument>({
     type: Boolean,
     default: true,
   },
+  tasks: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ],
   created_at: {
     type: Date,
     default: Date.now,
@@ -52,5 +59,9 @@ const UserSchema = new Schema<UserDocument>({
   },
 });
 
-// Create and export the model
+UserSchema.pre('save', function (next) {
+  this.updated_at = new Date();
+  next();
+});
+
 export default mongoose.model<UserDocument, UserModel>('User', UserSchema);

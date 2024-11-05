@@ -38,7 +38,7 @@ export const singIn = asyncMW(async (req: Request, res: Response) => {
     exp: jwtNumericDate(new Date()) + TOKEN_EXP_TIME,
   });
 
-  return ResponseHandler.success(res, { token, user }, 'SignIn successfully !!');
+  return ResponseHandler.success(res, { token }, 'SignIn successfully !!');
 });
 
 export const signUp = asyncMW(async (req: Request, res: Response) => {
@@ -63,7 +63,7 @@ export const signUp = asyncMW(async (req: Request, res: Response) => {
     password: encryptedPassword,
   });
 
-  return ResponseHandler.created(res, { user }, 'User added successfully !!');
+  return ResponseHandler.created(res, null ,'User added successfully !!');
 });
 
 export const verifyToken = asyncMW(async (req: AuthenticatedRequest, res: Response) => {
@@ -73,6 +73,6 @@ export const verifyToken = asyncMW(async (req: AuthenticatedRequest, res: Respon
     return ResponseHandler.unAuthorized(res, 'Unauthorized');
   }
 
-  const user = req.user as UserDocument;
+  const user = req.userData as UserDocument;
   return ResponseHandler.success(res, { user }, 'Token verified!!');
 });

@@ -20,12 +20,13 @@ export type role = {
 
 export type user = {
   _id: string;
-  name: string;
+  first_name: string;
+  last_name: string;
+  profile_photo: string;
   email: string;
-  phone_number?: string;
-  role: role;
+  is_active: boolean;
   created_at: Date;
   updated_at: Date;
   password: string;
-  address?: string;
+  tasks?: string[]
 };

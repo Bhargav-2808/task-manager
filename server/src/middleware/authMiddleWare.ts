@@ -3,6 +3,7 @@ import { jwtSignPayLoad } from '../types/common';
 import { jwtVerify } from '../utils/jwt';
 import ResponseHandler from '../utils/responseHandler';
 import { AuthenticatedRequest } from '../types/request';
+import { findUserById } from '../services/auth.service';
 
 export const authenticateUser = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   const token = req.header('Authorization');
@@ -21,13 +22,13 @@ export const authenticateUser = async (req: AuthenticatedRequest, res: Response,
     return ResponseHandler.unAuthorized(res, 'Unauthorized - User not found');
   }
   
-  // const user = await findUserById(userId);
+  const user = await findUserById(userId);
 
-  // if (!user) {
-  //   return ResponseHandler.unAuthorized(res, 'Unauthorized - User not found');
-  // }
+  if (!user) {
+    return ResponseHandler.unAuthorized(res, 'Unauthorized - User not found');
+  }
 
-  // req.user = user;
+  req.userData = user;
 
   next();
 };
