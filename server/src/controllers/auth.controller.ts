@@ -63,7 +63,7 @@ export const signUp = asyncMW(async (req: Request, res: Response) => {
     password: encryptedPassword,
   });
 
-  return ResponseHandler.created(res, null ,'User added successfully !!');
+  return ResponseHandler.created(res, null, 'User added successfully !!');
 });
 
 export const verifyToken = asyncMW(async (req: AuthenticatedRequest, res: Response) => {
@@ -75,4 +75,35 @@ export const verifyToken = asyncMW(async (req: AuthenticatedRequest, res: Respon
 
   const user = req.userData as UserDocument;
   return ResponseHandler.success(res, { user }, 'Token verified!!');
+});
+
+export const googleSingIn = asyncMW(async (req: Request, res: Response) => {
+  const { email } = req.body;
+
+  const alreadyExistUser = await findUserByEmail(email);
+
+  if (alreadyExistUser) {
+    const token = jwtSign({
+      kind: 'user-authentication-token',
+      sub: { id: alreadyExistUser._id },
+      iat: jwtNumericDate(new Date()),
+      exp: jwtNumericDate(new Date()) + TOKEN_EXP_TIME,
+    });
+
+    return ResponseHandler.success(res, { token }, 'Authenticated successfully !!');
+  }
+  
+  const user = await createUser({
+    ...req.body,
+    password: 'google-password',
+  });
+
+  const token = jwtSign({
+    kind: 'user-authentication-token',
+    sub: { id: user._id },
+    iat: jwtNumericDate(new Date()),
+    exp: jwtNumericDate(new Date()) + TOKEN_EXP_TIME,
+  });
+
+  return ResponseHandler.success(res, { token }, 'Authenticated successfully !!');
 });
