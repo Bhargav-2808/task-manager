@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const baseUrl = new URL(process.env.REACT_APP_URL || "http://localhost:8080");
-const fullUrl = new URL('/api/v1', baseUrl).toString();
+export const fullUrl = new URL('/api/v1', baseUrl).toString();
 
 
 const axiosInstance = axios.create({

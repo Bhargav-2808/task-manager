@@ -20,6 +20,14 @@ const Login = () => {
     }
   }, [user])
 
+
+  const googleAuth = () => {
+		window.open(
+			`http://localhost:8080/api/v1/auth/google/callback`,
+			"_self"
+		);
+	};
+
   // Sign-in function to handle login API call
   const signInUser = async () => {
     try {
@@ -43,7 +51,7 @@ const Login = () => {
         enqueueSnackbar(result.message || "Something went wrong", {
           variant: "error",
         });
-      }
+      } 
 
     } catch (error) {
       console.log(error, "error");
@@ -105,7 +113,7 @@ const Login = () => {
           Don't have an account? Signup
         </Link>
 
-        <Button variant="outlined" color="primary" fullWidth sx={{ mt: 2 }}>
+        <Button variant="outlined" color="primary" fullWidth sx={{ mt: 2 }} onClick={googleAuth}>
           Login with Google
         </Button>
       </Box>

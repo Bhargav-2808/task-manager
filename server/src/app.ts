@@ -1,4 +1,6 @@
 import express, { Application, Request, Response } from 'express';
+import passport from 'passport';
+import cookieSession from 'express-session';
 import { config } from './config/config';
 import './config/connection/connection';
 import './config/connection/seed';
@@ -7,6 +9,8 @@ import { createServer } from 'http';
 import { exceptionHandling } from './middleware/exceptionHandling';
 import { limiter } from './middleware/rateLimiter';
 import { router } from './routes';
+import "../src/passport/passport"
+
 
 export const app: Application = express();
 
@@ -15,11 +19,21 @@ const port = config.app.port || 8080;
 const corsOptions = {
   origin: '*',
 };
-
+app.use(
+	cookieSession({
+		name: "session",
+    secret: "session",
+    resave: false,
+    saveUninitialized: false
+	})
+);
 app.use(express.json({ limit: '2gb' }));
 app.use(express.static('public'));
 app.use(cors(corsOptions));
 app.use(limiter);
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 const httpServer = createServer(app);
 

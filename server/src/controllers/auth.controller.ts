@@ -8,7 +8,7 @@ import { createUser, findUserByEmail } from '../services/auth.service';
 import { AuthenticatedRequest } from '../types/request';
 import { UserDocument } from '../models/schemas/user.schema';
 
-const TOKEN_EXP_TIME = 24 * 12 * 60 * 60;
+export  const TOKEN_EXP_TIME = 24 * 12 * 60 * 60;
 
 export const singIn = asyncMW(async (req: Request, res: Response) => {
   const validatedInput = signInInputSchema.safeParse(req.body);
@@ -67,12 +67,6 @@ export const signUp = asyncMW(async (req: Request, res: Response) => {
 });
 
 export const verifyToken = asyncMW(async (req: AuthenticatedRequest, res: Response) => {
-  const { token } = req.body;
-
-  if (!token) {
-    return ResponseHandler.unAuthorized(res, 'Unauthorized');
-  }
-
   const user = req.userData as UserDocument;
   return ResponseHandler.success(res, { user }, 'Token verified!!');
 });
