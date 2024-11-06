@@ -12,15 +12,24 @@ import {
   MenuItem,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import { useUser } from "../../context/userContext";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const { token, logout } = useUser();
+  const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const logOutUser = () => {
+    logout();
+    navigate("/login");
   };
 
   return (
@@ -54,8 +63,22 @@ const Header = () => {
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           My App
         </Typography>
-        <Button color="inherit">Login</Button>
-        <Button color="inherit">Signup</Button>
+        {!token ? (
+          <>
+            <Button color="inherit" onClick={() => navigate("/login")}>
+              Login
+            </Button>
+            <Button color="inherit" onClick={() => navigate("/signup")}>
+              Signup
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button color="inherit" onClick={logOutUser}>
+              LogOut
+            </Button>
+          </>
+        )}
       </Toolbar>
     </AppBar>
   );

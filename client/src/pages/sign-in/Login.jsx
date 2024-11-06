@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, TextField, Typography, Link } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
@@ -9,9 +9,16 @@ const Login = () => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
-  const { login } = useUser();
+  const { login, user  } = useUser();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+
+  useEffect(()=>{
+    if(user) {
+      navigate("/");
+    }
+  }, [user])
 
   // Sign-in function to handle login API call
   const signInUser = async () => {

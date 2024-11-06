@@ -5,16 +5,19 @@ import App from "./App";
 import { UserProvider } from "./context/userContext";
 import SnackbarProvider from "../src/components/snackbar/SnackbarProvider";
 import { BrowserRouter as Router } from "react-router-dom";
+import { TaskProvider } from "./context/taskContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-      <SnackbarProvider>
-        <UserProvider>
+    <SnackbarProvider>
+      <UserProvider>
+        <TaskProvider>
           <Router>
             <App />
           </Router>
-        </UserProvider>
-      </SnackbarProvider>
+        </TaskProvider>
+      </UserProvider>
+    </SnackbarProvider>
   </React.StrictMode>
 );

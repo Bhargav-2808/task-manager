@@ -6,7 +6,7 @@ const createTask = async (data) =>
     (error) => error?.response?.data
   );
 
-const deleteTask = async () =>
+const deleteTask = async (id) =>
   axios.delete(`/task/${id}`).then(
     (response) => response,
     (error) => error?.response?.data

@@ -7,7 +7,6 @@ const registerUser = async (data) =>
   );
 
 const loginUser = async (data) => {
- console.log(data);
   return axios.post("/auth/sign-in", data).then(
     (response) => response,
     (error) => error?.response?.data

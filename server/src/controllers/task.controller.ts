@@ -81,5 +81,5 @@ export const getUserTasks = asyncMW(async (req: AuthenticatedRequest, res: Respo
 
   const tasks = await getTasks(user._id);
 
-  return ResponseHandler.created(res, tasks, 'Tasks Deleted successfully !!');
+  return ResponseHandler.success(res, tasks, 'Tasks get Successfully');
 });
