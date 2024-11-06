@@ -38,7 +38,7 @@ export const singIn = asyncMW(async (req: Request, res: Response) => {
     exp: jwtNumericDate(new Date()) + TOKEN_EXP_TIME,
   });
 
-  return ResponseHandler.success(res, { token }, 'SignIn successfully !!');
+  return ResponseHandler.success(res, { token, user }, 'SignIn successfully !!');
 });
 
 export const signUp = asyncMW(async (req: Request, res: Response) => {
